@@ -29,6 +29,11 @@ coverage: clean
 
 # -- instalation and execution
 
+.env: SHELL:=/bin/bash
+.env: required-env
+	@if [ $(env) == "dev" -a ! -e .env ]; then cp contrib/env-sample .env; fi
+	@if [ $(env) == "test" -a ! -e .env ]; then cp contrib/env-sample .env; fi
+
 required-env: SHELL:=/bin/bash
 required-env:
 	@if [ -z $(env) ]; then echo "env paramether is not set"; exit 1; fi
@@ -39,5 +44,4 @@ requirements: required-env
 	@if [ $(env) == "prod" ]; then pip install -r requirements.txt; fi
 	@if [ $(env) == "dev" ]; then pip install -r requirements/development.txt; fi
 	@if [ $(env) == "test" ]; then pip install -r requirements/development.txt; fi
-
 

@@ -1,12 +1,12 @@
-import os
+from decouple import config
 
 
 class base_config(object):
     SITE_NAME = 'Cool Editor'
-    MY_SALT = b"my preciousssssssssssssss"
-    SECRET_KEY = os.urandom(24) + MY_SALT
-    SERVER_NAME = os.environ.get('SERVER_NAME')
+    SECRET_KEY = config('SECRET_KEY')
+    SERVER_NAME = config('SERVER_NAME')
     LOGENABLE = True
+    DEBUG = False
 
 
 class dev_config(base_config):
@@ -21,7 +21,5 @@ class test_config(base_config):
 
 
 class prod_config(base_config):
-    DEBUG = False
     ASSETS_DEBUG = False
     WTF_CSRF_ENABLED = True
-    SECRET_KEY = os.environ.get('SECRET_KEY')

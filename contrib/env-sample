@@ -1,0 +1,2 @@
+SECRET_KEY=your_secret_here_change_this_phrase
+SERVER_NAME=your_server_name_here_change_this_phrase

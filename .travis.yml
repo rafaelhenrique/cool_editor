@@ -6,6 +6,7 @@ python:
 cache: pip
 
 install:
+  - make .env env=test
   - make requirements env=test
 
 script:
