@@ -9,6 +9,7 @@ run:
 	@python run.py
 
 # -- test
+
 check-debugger:
 	@find cool_editor -type f -exec egrep -iH "set_trace" {} \+ && echo "Ooops! Found 1 set_trace on your source code!" && exit 1 || exit 0
 
@@ -44,4 +45,10 @@ requirements: required-env
 	@if [ $(env) == "prod" ]; then pip install -r requirements.txt; fi
 	@if [ $(env) == "dev" ]; then pip install -r requirements/development.txt; fi
 	@if [ $(env) == "test" ]; then pip install -r requirements/development.txt; fi
+
+# -- redis
+
+redis-docker-start:
+	echo "Starting redis with docker..."
+	@sudo ./contrib/start_redis_docker.sh
 
