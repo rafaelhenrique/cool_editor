@@ -6,3 +6,4 @@ pytest-xdist==1.14
 coverage==4.0.3
 pytest-cov==2.2.1
 pytest-sugar==0.7.1
+mock==2.0.0

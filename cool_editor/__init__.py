@@ -1,10 +1,14 @@
+# import redis
 from flask import Flask
+from flask.ext.redis import FlaskRedis
 
 from cool_editor import config
 from cool_editor.core import core
 
+redis_store = FlaskRedis()
 
-def create_app(config=config.prod_config):
+
+def create_app(config=config.ProductionConfig):
     app = Flask("cool_editor")
     app.config.from_object(config)
 
@@ -38,4 +42,4 @@ def register_jinja_env(app):
 
 
 def register_extensions(app):
-    pass
+    redis_store.init_app(app)
