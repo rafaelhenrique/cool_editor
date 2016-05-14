@@ -1,0 +1,4 @@
+-r base.txt
+ipython
+ipdb
+pytest-flask==0.10.0
