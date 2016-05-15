@@ -1,4 +1,3 @@
-# import redis
 from flask import Flask
 from flask.ext.redis import FlaskRedis
 

@@ -3,8 +3,13 @@ from flask import render_template
 from ..core import core
 
 
+def redis():
+    from .. import redis_store
+    return redis_store
+
+
 @core.route('/', methods=['GET', ])
 def index():
-    from .. import redis_store
-    redis_store.hset(id(redis_store), "teste", "123")
+    obj_id = id(redis())
+    redis().hset(obj_id, "teste", "123")
     return render_template('index.html')
