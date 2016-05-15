@@ -2,7 +2,7 @@ from flask import Flask
 from flask.ext.redis import FlaskRedis
 
 from cool_editor import config
-from cool_editor.core import core
+from cool_editor.core import core_blueprint
 
 redis_store = FlaskRedis()
 
@@ -20,7 +20,7 @@ def create_app(config=config.ProductionConfig):
 
 
 def register_blueprints(app):
-    app.register_blueprint(core, url_prefix='/')
+    app.register_blueprint(core_blueprint, url_prefix='/')
 
 
 def register_errorhandlers(app):
