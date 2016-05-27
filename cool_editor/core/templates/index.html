@@ -1,32 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('core.static', filename='css/codemirror.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('core.static', filename='css/monokai.css') }}">
-  <title>(Cool)aborative editor - Cool Editor!</title>
-</head>
-<body>
-  <textarea id="code-editor" rows="50" cols="79">print("Hello World!")</textarea>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-  <script src="{{ url_for('core.static', filename='js/codemirror.js') }}"></script>
-  <script src="{{ url_for('core.static', filename='js/python.js') }}"></script>
-  <button id="show">Show code</button>
-  <script type="text/javascript">
-    var codeEditor = CodeMirror.fromTextArea($("#code-editor")[0], {theme: "monokai"});
-
-    $("#show").on("click", function(e){
-      var count = 0;
-      var arr = [];
-      while (codeEditor.getLine(count) != undefined) {
-        var line = codeEditor.getLine(count);
-        arr.push(line);
-        count += 1;
-      }
-      alert(arr.join("\n"));
-    });
-  </script>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-group">
+    <label for="code-editor">Your text:</label>
+    <textarea id="code-editor" class="form-control" rows="30" cols="79">print("Hello World!")</textarea>
+    <button id="show" class="form-control">Show code</button>
+</div>
+{% endblock %}
