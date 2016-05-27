@@ -33,7 +33,8 @@ class TestCoreView:
         response = self.client.get(url)
         tags = (
             ('<title>', 1),
-            ('<button id="show">', 1),
+            ('<label for="code-editor">', 1),
+            ('<button id="show".*</button>', 1),
             ('<textarea id="code-editor".*</textarea>', 1),
         )
         content = response.data.decode('utf-8')
