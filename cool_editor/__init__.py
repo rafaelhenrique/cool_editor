@@ -1,10 +1,14 @@
 from flask import Flask
 from flask.ext.redis import FlaskRedis
+from flask_wtf.csrf import CsrfProtect
 
 from cool_editor import config
 from cool_editor.core import core_blueprint
+from cool_editor.utils import DecodedRedis
 
-redis_store = FlaskRedis()
+
+redis_store = FlaskRedis.from_custom_provider(DecodedRedis)
+csrf = CsrfProtect()
 
 
 def create_app(config=config.ProductionConfig):
@@ -41,4 +45,5 @@ def register_jinja_env(app):
 
 
 def register_extensions(app):
+    csrf.init_app(app)
     redis_store.init_app(app)

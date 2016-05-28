@@ -24,6 +24,7 @@ class TestCoreView:
         expected_url = url_for('core.editor', hashkey="Rafael1234")
         assert expected_url in response.location
 
+    # pseudo acceptance test
     @patch('cool_editor.redis_store')
     @patch('cool_editor.core.views.id_generator')
     def test_html(self, mock_id_generator, mock_redis_store):
@@ -36,6 +37,12 @@ class TestCoreView:
             ('<label for="code-editor">', 1),
             ('<button id="show".*</button>', 1),
             ('<textarea id="code-editor".*</textarea>', 1),
+            ('<script src="/static/js/jquery.min.js"></script>', 1),
+            ('<script src="/static/js/bootstrap.min.js"></script>', 1),
+            ('<script src="/core/js/code-editor.js"></script>', 1),
+            ('<link href="/static/css/bootstrap.min.css".*>', 1),
+            ('<link href="/static/css/bootstrap-theme.min.css".*>', 1),
+            ('<meta name="csrf-token"', 1),
         )
         content = response.data.decode('utf-8')
         for text, count in tags:

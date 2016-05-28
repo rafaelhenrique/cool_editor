@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="form-group">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <label for="code-editor">Your text:</label>
-    <textarea id="code-editor" class="form-control" rows="30" cols="79">print("Hello World!")</textarea>
+    <textarea id="code-editor" class="form-control" rows="30" cols="79" data-verb="put" data-endpoint="{{ url_for('core.docs', hashkey=hashkey) }}"></textarea>
     <button id="show" class="form-control">Show code</button>
 </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('core.static', filename='js/code-editor.js') }}"></script>
 {% endblock %}
