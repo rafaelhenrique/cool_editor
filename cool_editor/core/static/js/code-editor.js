@@ -1,34 +1,31 @@
 $(function(){
     var csrftoken = $('meta[name=csrf-token]').attr('content');
+    var file = {};
 
-    $('#code-editor').on("keyup click", function(event){
-        var code_editor = $(this)[0];
-        // line where the cursor is
-        var cursor = code_editor.selectionStart;
-        // array of lines after cursor
-        var lines_after_cursor = code_editor.value.substr(0, cursor).split("\n")
-        // line must be start in 0
-        var actual_line_number = lines_after_cursor.length - 1
-        var actual_line = lines_after_cursor[actual_line_number]
-
+    $("#code-editor").on("keyup keydown", function(event){
+        var lines = $(this).val().split('\n');
         var endpoint = $(this).data("endpoint");
         var verb = $(this).data("verb");
 
-        $.ajax({
-            url: endpoint,
-            type: verb,
-            data: {'key': actual_line_number, 'value': actual_line},
-        })
-        .fail(function(jqXHR, textStatus) {
-            var payload = jqXHR.responseJSON;
-            console.log(payload);
-        })        
+        $.each(lines, function(line_number, new_line){
+            var old_line = file[line_number];
 
-        // Only debug purposes
-        // console.log(actual_line_number);
-        // console.log(actual_line);
-        // console.log(csrftoken);
-        return false;
+            // diff between versions of file line by line
+            if (old_line != new_line){
+                // Only debug porpouses
+                // console.log("Diff: " + line_number + ". old: " + old_line + " new: " + new_line);
+                $.ajax({
+                    url: endpoint,
+                    type: verb,
+                    data: {'key': line_number, 'value': new_line},
+                })
+                .fail(function(jqXHR, textStatus) {
+                    var payload = jqXHR.responseJSON;
+                    console.log(payload);
+                })
+                file[line_number] = new_line;
+            }
+        });
     });
 
     var get_doc = function(){
@@ -48,6 +45,7 @@ $(function(){
             $.each(payload, function(line_number, line_value) {
                 if ($.isNumeric(line_number) == true){
                     lines.push(line_value);
+                    file[line_number] = line_value;
                 }
             });
             code_editor.val(lines.join("\n"));
